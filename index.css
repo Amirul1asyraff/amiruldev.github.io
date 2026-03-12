@@ -79,6 +79,7 @@ img {
   letter-spacing: -0.02em;
   background: var(--accent-gradient);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -96,6 +97,26 @@ img {
 .nav-links a:hover {
   color: var(--text);
   transform: translateY(-2px);
+}
+
+.nav-socials {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  border-left: 1px solid var(--border);
+  padding-left: 20px;
+}
+
+.nav-socials a {
+  color: var(--muted);
+  font-size: 1.25rem;
+  transition: all 0.3s ease;
+}
+
+.nav-socials a:hover {
+  color: var(--text);
+  transform: translateY(-2px);
+  filter: drop-shadow(0 0 8px var(--accent));
 }
 
 /* Hero Section */
@@ -151,6 +172,7 @@ h1 {
 .gradient {
   background: var(--accent-gradient);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -582,6 +604,7 @@ footer {
 
 @media (max-width: 768px) {
   .nav-links { display: none; }
+  .nav-socials { border-left: none; padding-left: 0; }
   .projects-grid { grid-template-columns: 1fr; }
   .timeline-item { grid-template-columns: 1fr; gap: 12px; }
   .stats { grid-template-columns: 1fr; }
