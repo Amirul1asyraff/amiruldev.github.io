@@ -4,456 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Amirul | Developer Portfolio</title>
-  <meta name="description" content="Personal portfolio website for Amirul - Junior Software Developer." />
-  <style>
-    :root {
-      --bg: #0b1020;
-      --bg-soft: rgba(255,255,255,0.06);
-      --card: rgba(255,255,255,0.08);
-      --border: rgba(255,255,255,0.12);
-      --text: #eef2ff;
-      --muted: #b8c0e0;
-      --accent: #7c9cff;
-      --accent-2: #7ef0c9;
-      --shadow: 0 20px 60px rgba(0,0,0,0.35);
-      --max: 1120px;
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(124,156,255,0.22), transparent 30%),
-        radial-gradient(circle at top right, rgba(126,240,201,0.14), transparent 28%),
-        linear-gradient(180deg, #0a0f1f 0%, #0c1224 45%, #0b1020 100%);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
-
-    .container {
-      width: min(calc(100% - 32px), var(--max));
-      margin: 0 auto;
-    }
-
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(18px);
-      background: rgba(8, 12, 24, 0.7);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 0;
-      gap: 16px;
-    }
-
-    .brand {
-      font-weight: 800;
-      letter-spacing: 0.2px;
-      font-size: 1.05rem;
-    }
-
-    .brand span { color: var(--accent-2); }
-
-    .nav-links {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      font-size: 0.95rem;
-      transition: 0.25s ease;
-    }
-
-    .nav-links a:hover { color: var(--text); }
-
-    .hero {
-      padding: 84px 0 52px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.3fr 0.9fr;
-      gap: 28px;
-      align-items: stretch;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 14px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: rgba(255,255,255,0.05);
-      color: var(--muted);
-      font-size: 0.92rem;
-      margin-bottom: 18px;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--accent-2);
-      box-shadow: 0 0 14px var(--accent-2);
-    }
-
-    h1 {
-      margin: 0 0 16px;
-      font-size: clamp(2.4rem, 5vw, 4.8rem);
-      line-height: 0.96;
-      letter-spacing: -0.04em;
-    }
-
-    .gradient {
-      background: linear-gradient(90deg, #ffffff 0%, #b9c8ff 45%, #7ef0c9 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .hero p {
-      color: var(--muted);
-      font-size: 1.06rem;
-      max-width: 720px;
-      margin: 0 0 26px;
-    }
-
-    .cta-row {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 28px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 13px 18px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      font-weight: 600;
-      transition: 0.25s ease;
-      min-width: 140px;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent), #96aeff);
-      color: #08111d;
-      border: 0;
-      box-shadow: 0 18px 40px rgba(124,156,255,0.25);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.05);
-      color: var(--text);
-    }
-
-    .btn:hover { transform: translateY(-2px); }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-
-    .stat {
-      padding: 18px;
-      border-radius: 20px;
-      background: var(--bg-soft);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 1.55rem;
-      margin-bottom: 4px;
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .panel {
-      height: 100%;
-      border-radius: 28px;
-      padding: 24px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.05));
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .panel::before {
-      content: "";
-      position: absolute;
-      inset: auto -20% -30% auto;
-      width: 220px;
-      height: 220px;
-      background: radial-gradient(circle, rgba(124,156,255,0.22), transparent 65%);
-      filter: blur(8px);
-    }
-
-    .profile-card {
-      display: grid;
-      gap: 18px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .avatar {
-      width: 76px;
-      height: 76px;
-      border-radius: 22px;
-      display: grid;
-      place-items: center;
-      font-size: 1.8rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #07131b;
-      box-shadow: 0 16px 30px rgba(124,156,255,0.25);
-    }
-
-    .profile-meta h3 {
-      margin: 0;
-      font-size: 1.35rem;
-    }
-
-    .profile-meta p {
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: 0.96rem;
-    }
-
-    .skill-pills {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .pill {
-      padding: 9px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.05);
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-
-    section {
-      padding: 34px 0;
-    }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 20px;
-      margin-bottom: 20px;
-    }
-
-    .section-head h2 {
-      margin: 0;
-      font-size: clamp(1.6rem, 3vw, 2.4rem);
-    }
-
-    .section-head p {
-      margin: 0;
-      max-width: 620px;
-      color: var(--muted);
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 20px;
-    }
-
-    .card {
-      padding: 24px;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-    }
-
-    .about-copy {
-      color: var(--muted);
-      font-size: 1rem;
-    }
-
-    .list {
-      display: grid;
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .list-item {
-      display: flex;
-      gap: 14px;
-      align-items: start;
-    }
-
-    .list-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 14px;
-      background: rgba(124,156,255,0.14);
-      display: grid;
-      place-items: center;
-      font-weight: 700;
-      color: #cbd7ff;
-      flex-shrink: 0;
-    }
-
-    .list-item h4, .project-card h3, .timeline-item h3 { margin: 0 0 6px; }
-    .list-item p, .project-card p, .timeline-item p { margin: 0; color: var(--muted); }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .project-card {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .project-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .project-tag {
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(126,240,201,0.12);
-      border: 1px solid rgba(126,240,201,0.24);
-      color: #bdf6e5;
-      font-size: 0.82rem;
-    }
-
-    .project-links {
-      display: flex;
-      gap: 10px;
-      margin-top: 18px;
-      flex-wrap: wrap;
-    }
-
-    .mini-link {
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.04);
-      font-size: 0.9rem;
-      color: var(--text);
-    }
-
-    .timeline {
-      display: grid;
-      gap: 16px;
-      position: relative;
-    }
-
-    .timeline-item {
-      display: grid;
-      grid-template-columns: 140px 1fr;
-      gap: 16px;
-      padding: 22px;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-    }
-
-    .timeline-date {
-      color: #cbd7ff;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
-
-    .contact-box {
-      text-align: center;
-      padding: 34px 22px;
-      border-radius: 28px;
-      background: linear-gradient(180deg, rgba(124,156,255,0.14), rgba(255,255,255,0.05));
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-    }
-
-    .contact-box p {
-      color: var(--muted);
-      max-width: 650px;
-      margin: 10px auto 24px;
-    }
-
-    footer {
-      padding: 26px 0 50px;
-      color: var(--muted);
-      font-size: 0.93rem;
-      text-align: center;
-    }
-
-    @media (max-width: 980px) {
-      .hero-grid,
-      .about-grid,
-      .projects-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .timeline-item {
-        grid-template-columns: 1fr;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 720px) {
-      .nav-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .nav-links {
-        gap: 14px;
-      }
-
-      .hero {
-        padding-top: 52px;
-      }
-
-      h1 { line-height: 1.02; }
-
-      .section-head {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-  </style>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Personal portfolio website for Amirul - Junior Software Developer focused on clean code and digital experiences." />
+  <meta name="keywords" content="Amirul, Software Developer, Junior Developer, Portfolio, Web Development, PHP, Laravel, JavaScript" />
+  <meta name="author" content="Amirul" />
+  
+  <!-- Favicon placeholder -->
+  <link rel="icon" type="image/png" href="assets/profile.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
   <nav class="nav">
@@ -471,11 +37,14 @@
   <header class="hero" id="home">
     <div class="container hero-grid">
       <div>
-        <div class="badge"><span class="dot"></span> Open to junior developer opportunities</div>
-        <h1>Building <span class="gradient">clean digital experiences</span> with code, curiosity, and consistency.</h1>
+        <div class="badge">
+          <span class="dot"></span> 
+          Open to junior developer opportunities
+        </div>
+        <h1>Building <span class="gradient">clean digital experiences</span> with code and curiosity.</h1>
         <p>
-          I'm Amirul, a junior software developer focused on web applications, APIs, and practical systems that solve real problems.
-          I enjoy turning ideas into usable products with clean code, thoughtful design, and a mindset of continuous learning.
+          I'm Amirul, a junior software developer focused on web applications, APIs, and practical systems that solve real problems. 
+          I turn ideas into usable products with clean code and thoughtful design.
         </p>
         <div class="cta-row">
           <a class="btn btn-primary" href="#projects">View Projects</a>
@@ -484,22 +53,24 @@
         <div class="stats">
           <div class="stat">
             <strong>3+</strong>
-            <span>Portfolio projects shipped</span>
+            <span>Projects Shipped</span>
           </div>
           <div class="stat">
             <strong>API</strong>
-            <span>Backend and integration focused</span>
+            <span>Focused Dev</span>
           </div>
           <div class="stat">
             <strong>Growth</strong>
-            <span>Always learning and improving</span>
+            <span>Always Learning</span>
           </div>
         </div>
       </div>
 
       <aside class="panel">
         <div class="profile-card">
-          <div class="avatar">A</div>
+          <div class="avatar-container">
+            <img src="assets/profile.png" alt="Amirul's Headshot">
+          </div>
           <div class="profile-meta">
             <h3>Amirul</h3>
             <p>Junior Software Developer</p>
@@ -511,10 +82,10 @@
             <span class="pill">MySQL</span>
             <span class="pill">REST API</span>
             <span class="pill">Docker</span>
-            <span class="pill">GitHub Pages</span>
+            <span class="pill">GitHub</span>
           </div>
-          <p style="margin: 0; color: var(--muted);">
-            Passionate about building systems that are useful, scalable, and easier for people to use. Currently growing through real-world projects and continuous hands-on practice.
+          <p style="margin: 0; color: var(--muted); font-size: 0.9rem;">
+            Passionate about building scalable systems and improving user experience through hands-on practice.
           </p>
         </div>
       </aside>
@@ -530,11 +101,11 @@
 
       <div class="about-grid">
         <div class="card">
-          <div class="about-copy">
+          <p style="color: var(--muted); font-size: 1.1rem; line-height: 1.8;">
             I enjoy working on applications that blend backend logic, clean user flows, and practical problem-solving. My interest is in building reliable systems, improving user experience, and learning modern development practices through hands-on work.
             <br><br>
             I am especially interested in software development environments where I can contribute, learn from experienced engineers, and keep improving my technical and collaboration skills.
-          </div>
+          </p>
         </div>
 
         <div class="card">
@@ -543,21 +114,21 @@
               <div class="list-icon">01</div>
               <div>
                 <h4>Development Focus</h4>
-                <p>Web applications, API integration, backend logic, and functional user experiences.</p>
+                <p>Web applications, API integration, and functional user experiences.</p>
               </div>
             </div>
             <div class="list-item">
               <div class="list-icon">02</div>
               <div>
                 <h4>Working Style</h4>
-                <p>Curious, detail-oriented, and comfortable learning by building and iterating.</p>
+                <p>Curious, detail-oriented, and comfortable learning by building.</p>
               </div>
             </div>
             <div class="list-item">
               <div class="list-icon">03</div>
               <div>
                 <h4>Goal</h4>
-                <p>To grow into a strong software engineer who delivers real business value through code.</p>
+                <p>To grow into a strong engineer who delivers real value through code.</p>
               </div>
             </div>
           </div>
@@ -575,62 +146,77 @@
 
       <div class="projects-grid">
         <article class="card project-card">
-          <div class="project-top">
-            <span class="project-tag">API Project</span>
-            <span style="color: var(--muted); font-size: 0.9rem;">01</span>
+          <div class="project-img">
+            <img src="assets/project-api.png" alt="Student Management API Mockup">
           </div>
-          <h3>Student Management API</h3>
-          <p>
-            A backend project for managing student data with CRUD operations, filtering, and structured API responses. Designed to improve maintainability and support real system usage.
-          </p>
-          <div class="skill-pills" style="margin-top: 16px;">
-            <span class="pill">Laravel</span>
-            <span class="pill">MySQL</span>
-            <span class="pill">REST API</span>
-          </div>
-          <div class="project-links">
-            <a href="#" class="mini-link">Live Demo</a>
-            <a href="#" class="mini-link">Source Code</a>
-          </div>
-        </article>
-
-        <article class="card project-card">
-          <div class="project-top">
-            <span class="project-tag">Web System</span>
-            <span style="color: var(--muted); font-size: 0.9rem;">02</span>
-          </div>
-          <h3>Payment Gateway Flow</h3>
-          <p>
-            A project focused on payment success flow, authentication handling, and redirect behavior. Built to solve user journey issues and improve transaction experience.
-          </p>
-          <div class="skill-pills" style="margin-top: 16px;">
-            <span class="pill">PHP</span>
-            <span class="pill">FPX</span>
-            <span class="pill">Debugging</span>
-          </div>
-          <div class="project-links">
-            <a href="#" class="mini-link">Live Demo</a>
-            <a href="#" class="mini-link">Source Code</a>
+          <div class="project-content">
+            <div class="project-top">
+              <span class="project-tag">API Project</span>
+              <span style="color: var(--muted); font-size: 0.9rem;">01</span>
+            </div>
+            <h3>Student Management API</h3>
+            <p>
+              A backend project for managing student data with CRUD operations, filtering, and structured responses.
+            </p>
+            <div class="skill-pills" style="justify-content: flex-start; margin-bottom: 24px;">
+              <span class="pill">Laravel</span>
+              <span class="pill">MySQL</span>
+              <span class="pill">REST API</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="mini-link">Demo</a>
+              <a href="#" class="mini-link">Source</a>
+            </div>
           </div>
         </article>
 
         <article class="card project-card">
-          <div class="project-top">
-            <span class="project-tag">Infrastructure</span>
-            <span style="color: var(--muted); font-size: 0.9rem;">03</span>
+          <div class="project-img">
+            <img src="assets/project-payment.png" alt="Payment Gateway Mockup">
           </div>
-          <h3>Home Lab & Deployment</h3>
-          <p>
-            A personal setup for self-hosting and testing services with containers, reverse proxies, and secure access tools. Useful for learning deployment and real environment behavior.
-          </p>
-          <div class="skill-pills" style="margin-top: 16px;">
-            <span class="pill">Docker</span>
-            <span class="pill">Nginx</span>
-            <span class="pill">Cloudflare</span>
+          <div class="project-content">
+            <div class="project-top">
+              <span class="project-tag">Web System</span>
+              <span style="color: var(--muted); font-size: 0.9rem;">02</span>
+            </div>
+            <h3>Payment Gateway Flow</h3>
+            <p>
+              Focused on payment success flow, authentication handling, and redirect behavior.
+            </p>
+            <div class="skill-pills" style="justify-content: flex-start; margin-bottom: 24px;">
+              <span class="pill">PHP</span>
+              <span class="pill">FPX</span>
+              <span class="pill">Auth</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="mini-link">Demo</a>
+              <a href="#" class="mini-link">Source</a>
+            </div>
           </div>
-          <div class="project-links">
-            <a href="#" class="mini-link">Live Demo</a>
-            <a href="#" class="mini-link">Source Code</a>
+        </article>
+
+        <article class="card project-card">
+          <div class="project-img">
+            <img src="assets/project-homelab.png" alt="Home Lab Illustration">
+          </div>
+          <div class="project-content">
+            <div class="project-top">
+              <span class="project-tag">Infrastructure</span>
+              <span style="color: var(--muted); font-size: 0.9rem;">03</span>
+            </div>
+            <h3>Home Lab & Deployment</h3>
+            <p>
+              Personal setup for self-hosting with containers, reverse proxies, and secure access.
+            </p>
+            <div class="skill-pills" style="justify-content: flex-start; margin-bottom: 24px;">
+              <span class="pill">Docker</span>
+              <span class="pill">Nginx</span>
+              <span class="pill">Cloudflare</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="mini-link">Demo</a>
+              <a href="#" class="mini-link">Source</a>
+            </div>
           </div>
         </article>
       </div>
@@ -641,31 +227,31 @@
     <div class="container">
       <div class="section-head">
         <h2>My Journey</h2>
-        <p>A simple timeline of how I’m growing as a developer through projects, learning, and real technical challenges.</p>
+        <p>A simple timeline of how I’m growing as a developer through learning and technical challenges.</p>
       </div>
 
       <div class="timeline">
         <div class="timeline-item">
-          <div class="timeline-date">Starting Point</div>
+          <div class="timeline-date">The Foundation</div>
           <div>
             <h3>Built a foundation in software and web development</h3>
-            <p>I started by learning programming fundamentals, databases, and how web systems work together from frontend to backend.</p>
+            <p>Started by learning programming fundamentals, databases, and how web systems work from frontend to backend.</p>
           </div>
         </div>
 
         <div class="timeline-item">
-          <div class="timeline-date">Hands-On Practice</div>
+          <div class="timeline-date">Practical Work</div>
           <div>
-            <h3>Moved from theory into real projects</h3>
-            <p>I began building practical systems such as APIs, dashboards, and feature flows that helped me understand debugging, structure, and maintainability.</p>
+            <h3>Moved from theory into real-world projects</h3>
+            <p>Began building practical systems like APIs and dashboards to understand debugging, structure, and maintainability.</p>
           </div>
         </div>
 
         <div class="timeline-item">
-          <div class="timeline-date">Current Focus</div>
+          <div class="timeline-date">Current Path</div>
           <div>
-            <h3>Sharpening my portfolio and developer identity</h3>
-            <p>I’m currently improving my GitHub, showcasing meaningful work, and growing toward junior software developer opportunities in real product teams.</p>
+            <h3>Sharpening my developer identity</h3>
+            <p>Growing my GitHub portfolio and focusing on junior software developer opportunities in real product teams.</p>
           </div>
         </div>
       </div>
@@ -675,11 +261,11 @@
   <section id="contact">
     <div class="container">
       <div class="contact-box">
-        <h2 style="margin: 0; font-size: clamp(1.8rem, 3vw, 2.6rem);">Let’s build something meaningful.</h2>
+        <h2>Let’s build something meaningful.</h2>
         <p>
-          I’m open to junior developer roles, freelance collaborations, and opportunities where I can contribute, learn, and grow with a strong team.
+          I’m open to junior developer roles, freelance collaborations, and opportunities to learn and grow.
         </p>
-        <div class="cta-row" style="justify-content: center; margin-bottom: 0;">
+        <div class="cta-row">
           <a class="btn btn-primary" href="mailto:your@email.com">Email Me</a>
           <a class="btn btn-secondary" href="https://github.com/Amirul1asyraff" target="_blank" rel="noreferrer">View GitHub</a>
         </div>
@@ -688,7 +274,41 @@
   </section>
 
   <footer>
-    <div class="container">© 2026 Amirul. Built with HTML and hosted on GitHub Pages.</div>
+    <div class="container">
+      <p>© 2026 Amirul. Built with Passion & Code.</p>
+    </div>
   </footer>
+
+  <script>
+    // Simple smooth scroll and intersection observer for reveal effect
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    const observerOptions = {
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('section').forEach(section => {
+      section.style.opacity = '0';
+      section.style.transform = 'translateY(20px)';
+      section.style.transition = 'all 0.6s ease-out';
+      observer.observe(section);
+    });
+  </script>
 </body>
 </html>
