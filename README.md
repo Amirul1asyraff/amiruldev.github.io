@@ -1,1 +1,1 @@
-# amiruldev.github.io
+[# amiruldev.github.io](https://skycore.my/)
