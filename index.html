@@ -12,9 +12,28 @@
   <meta name="keywords"
     content="Amirul, Software Developer, Junior Developer, Portfolio, Web Development, PHP, Laravel, JavaScript" />
   <meta name="author" content="Amirul" />
+  <link rel="canonical" href="https://skycore.my/" />
 
-  <!-- Favicon placeholder -->
-  <link rel="icon" type="image/jpeg" href="assets/profile.jpeg">
+  <!-- Open Graph / social link previews -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://skycore.my/" />
+  <meta property="og:title" content="Amirul | Developer Portfolio" />
+  <meta property="og:description"
+    content="Junior Software Developer. CPRE-FL certified in requirements engineering. Building web applications, APIs, and practical systems." />
+  <meta property="og:image" content="https://skycore.my/assets/profile.png" />
+  <meta property="og:image:alt" content="Portrait of Amirul, software developer" />
+  <meta property="og:site_name" content="Amirul" />
+
+  <!-- summary (not summary_large_image): profile.png is 800x800 square.
+       A 1.91:1 card would centre-crop it. Swap to summary_large_image in S6
+       once a purpose-built 1200x630 card exists. -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Amirul | Developer Portfolio" />
+  <meta name="twitter:description"
+    content="Junior Software Developer. CPRE-FL certified in requirements engineering. Building web applications, APIs, and practical systems." />
+  <meta name="twitter:image" content="https://skycore.my/assets/profile.png" />
+
+  <link rel="icon" type="image/png" href="assets/profile.png">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,10 +49,26 @@
 </head>
 
 <body>
-  <nav class="nav">
+  <nav class="nav" id="nav">
     <div class="container nav-inner">
       <a href="#home" class="brand">Amirul<span>.dev</span></a>
-      <div class="nav-links">
+
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Open navigation menu"
+        aria-expanded="false" aria-controls="nav-links">
+        <svg class="nav-toggle-icon nav-toggle-open" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+          <line x1="3" y1="7" x2="21" y2="7" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="17" x2="21" y2="17" />
+        </svg>
+        <svg class="nav-toggle-icon nav-toggle-close" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+          <line x1="5" y1="5" x2="19" y2="19" />
+          <line x1="19" y1="5" x2="5" y2="19" />
+        </svg>
+      </button>
+
+      <div class="nav-links" id="nav-links">
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
         <a href="#journey">Journey</a>
@@ -94,19 +129,16 @@
             <span class="pill">Docker</span>
             <span class="pill">GitHub</span>
           </div>
-          <div class="main-socials" style="display: flex; gap: 20px; margin-top: 10px;">
-            <a href="https://github.com/Amirul1asyraff" target="_blank" rel="noreferrer"
-              style="color: var(--text); font-size: 1.5rem; transition: transform 0.3s; transform: scale(1);"
-              onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-              <i class="fa-brands fa-github"></i>
+          <div class="main-socials">
+            <a href="https://github.com/Amirul1asyraff" target="_blank" rel="noreferrer" aria-label="Amirul on GitHub">
+              <i class="fa-brands fa-github" aria-hidden="true"></i>
             </a>
             <a href="https://www.linkedin.com/in/amirulasyraff15/" target="_blank" rel="noreferrer"
-              style="color: var(--text); font-size: 1.5rem; transition: transform 0.3s; transform: scale(1);"
-              onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-              <i class="fa-brands fa-linkedin"></i>
+              aria-label="Amirul on LinkedIn">
+              <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
             </a>
           </div>
-          <p style="margin: 0; color: var(--muted); font-size: 0.9rem; margin-top: 8px;">
+          <p class="profile-blurb">
             Passionate about building scalable systems and improving user experience through hands-on practice.
           </p>
         </div>
@@ -399,35 +431,73 @@
   </footer>
 
   <script>
-    // Simple smooth scroll and intersection observer for reveal effect
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
+    // Smooth scrolling is handled by CSS (html { scroll-behavior: smooth }).
+    // No JS anchor handler here on purpose: preventDefault() stopped the URL hash
+    // from updating, which broke deep links, sharing and the back button.
+
+    /* ---- Mobile navigation ---- */
+    (function () {
+      const nav = document.getElementById('nav');
+      const toggle = document.getElementById('nav-toggle');
+      const links = document.getElementById('nav-links');
+      if (!nav || !toggle || !links) return;
+
+      const setOpen = (open) => {
+        nav.classList.toggle('is-open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+      };
+
+      toggle.addEventListener('click', () => {
+        setOpen(!nav.classList.contains('is-open'));
       });
-    });
 
-    const observerOptions = {
-      threshold: 0.1
-    };
+      // Picking a destination closes the menu.
+      links.addEventListener('click', (e) => {
+        if (e.target.closest('a')) setOpen(false);
+      });
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
+      // Escape closes and returns focus to the toggle.
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && nav.classList.contains('is-open')) {
+          setOpen(false);
+          toggle.focus();
         }
       });
-    }, observerOptions);
 
-    document.querySelectorAll('section').forEach(section => {
-      section.style.opacity = '0';
-      section.style.transform = 'translateY(20px)';
-      section.style.transition = 'all 0.6s ease-out';
-      observer.observe(section);
-    });
+      // Tapping outside the nav closes it.
+      document.addEventListener('click', (e) => {
+        if (nav.classList.contains('is-open') && !nav.contains(e.target)) setOpen(false);
+      });
+
+      // Crossing back to desktop must not leave the menu stuck open.
+      window.matchMedia('(min-width: 769px)').addEventListener('change', (e) => {
+        if (e.matches) setOpen(false);
+      });
+    })();
+
+    /* ---- Section reveal on scroll ---- */
+    (function () {
+      const sections = document.querySelectorAll('section');
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Reduced motion, or no IntersectionObserver: leave everything visible.
+      if (reduced || !('IntersectionObserver' in window)) return;
+
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);   // reveal once, then stop watching
+          }
+        });
+      }, { threshold: 0.1 });
+
+      sections.forEach(section => {
+        section.classList.add('reveal');
+        observer.observe(section);
+      });
+    })();
   </script>
 </body>
 
