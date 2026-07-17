@@ -1,0 +1,391 @@
+/* ==========================================================================
+   Swiss Modernism 2.0 — design system
+   Portfolio revamp, Direction B. See planning/portfolio-revamp.md
+
+   NOT imported by index.html or the project pages. S1 is deliberately
+   additive: the live site keeps rendering from index.css until S2–S5
+   migrate it deliberately. main publishes to skycore.my on merge, so a
+   half-migrated stylesheet would be a half-migrated live site.
+
+   Token layers, in strict order:
+     1. primitive  --sw-*      raw values. NEVER referenced by a component.
+     2. semantic   --color-*   role-based. This is what components consume.
+     3. component  --btn-*     per-component, built from semantic.
+
+   The point of the middle layer: dark mode reassigns semantics only.
+   No component rule is theme-aware, so a component cannot be "right in
+   light and wrong in dark" — there is only one place to get it wrong.
+   ========================================================================== */
+
+/* ---------- Layer 1: primitives ---------------------------------------- */
+
+:root {
+  --sw-white:    #FFFFFF;
+  --sw-gray-50:  #FAFAFA;
+  --sw-gray-100: #F5F5F5;
+  --sw-gray-200: #E4E4E7;
+  --sw-gray-300: #D4D4D8;
+  --sw-gray-400: #A1A1AA;
+  --sw-gray-500: #71717A;
+  --sw-gray-600: #52525B;
+  --sw-gray-700: #3F3F46;
+  --sw-gray-800: #27272A;
+  --sw-gray-900: #18181B;
+  --sw-gray-950: #0A0A0A;
+  --sw-black:    #000000;
+
+  /* One accent. Swiss allows exactly one — the -400 is the dark-theme
+     tonal variant, not a second colour. */
+  --sw-blue-400: #60A5FA;
+  --sw-blue-600: #2563EB;
+  --sw-blue-700: #1D4ED8;
+
+  --sw-red-500:  #EF4444;
+  --sw-red-600:  #DC2626;
+
+  /* ---------- Spacing: strict 8px rhythm (4px only for optical nudges) --- */
+  --space-05: 4px;
+  --space-1:  8px;
+  --space-2:  16px;
+  --space-3:  24px;
+  --space-4:  32px;
+  --space-5:  40px;
+  --space-6:  48px;
+  --space-8:  64px;
+  --space-12: 96px;
+  --space-16: 128px;
+
+  /* ---------- Grid ------------------------------------------------------ */
+  --grid-cols: 12;
+  --grid-gap: var(--space-2);
+  --measure: 68ch;        /* line-length cap: 60–75 chars */
+  --max: 1200px;
+
+  /* ---------- Type ------------------------------------------------------ */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+
+  /* Modular scale. Fluid where it earns it; fixed where predictability wins. */
+  --text-xs:   0.75rem;   /* 12 — mono labels only */
+  --text-sm:   0.875rem;  /* 14 */
+  --text-base: 1rem;      /* 16 — never smaller for body (iOS auto-zoom) */
+  --text-lg:   1.125rem;  /* 18 */
+  --text-xl:   1.5rem;    /* 24 */
+  --text-2xl:  2rem;      /* 32 */
+  --text-3xl:  clamp(2.5rem, 5vw, 3.5rem);
+  --text-4xl:  clamp(3rem, 8vw, 5.5rem);
+
+  --leading-tight: 1.05;  /* display */
+  --leading-snug:  1.25;  /* headings */
+  --leading-body:  1.6;   /* body: 1.5–1.75 */
+
+  --tracking-tight: -0.03em;
+  --tracking-normal: 0;
+  --tracking-label: 0.08em;   /* uppercase mono labels */
+
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-semi:    600;
+  --weight-bold:    700;
+
+  /* ---------- Swiss constants ------------------------------------------ */
+  --radius: 0px;          /* no rounding. this is not negotiable in Swiss. */
+  --rule: 1px;            /* hairline */
+  --rule-bold: 2px;       /* structural */
+  --motion-fast: 150ms;
+  --motion-base: 250ms;
+  --ease: cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+/* ---------- Layer 2: semantic — LIGHT (the default) --------------------- */
+
+/* Two text levels, not three. A --color-fg-subtle (gray-500) was drafted and
+   removed: it passed light at 4.83:1 but failed dark at 4.10:1 on gray-950,
+   and no component used it. Rather than tune a dead token into compliance,
+   the system commits to fg + fg-muted — which is also the more Swiss answer.
+   A third level may be added in S2–S5, with a value proven in BOTH themes. */
+:root {
+  --color-bg:            var(--sw-white);
+  --color-surface:       var(--sw-gray-100);
+  --color-surface-alt:   var(--sw-gray-50);
+  --color-fg:            var(--sw-black);
+  --color-fg-muted:      var(--sw-gray-600);
+  --color-border:        var(--sw-black);
+  --color-border-subtle: var(--sw-gray-200);
+  --color-accent:        var(--sw-blue-600);
+  --color-accent-hover:  var(--sw-blue-700);
+  --color-on-accent:     var(--sw-white);
+  --color-danger:        var(--sw-red-600);
+  --color-focus:         var(--sw-blue-600);
+}
+
+/* ---------- Layer 2: semantic — DARK ------------------------------------
+   Designed as a PAIR, not inverted (dark-mode-pairing). Two rules drive it:
+     - surfaces lift with lightness, never with a drop shadow
+     - the accent DESATURATES (blue-600 -> blue-400). blue-600 on near-black
+       fails contrast; the lighter tonal variant is the same brand colour at
+       the luminance dark demands.
+   Contrast is verified independently per theme — see tools/check-contrast.mjs.
+   Both a media query and an explicit [data-theme] hook, so the toggle can
+   override the OS in either direction. ---------------------------------- */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-bg:            var(--sw-gray-950);
+    --color-surface:       var(--sw-gray-900);
+    --color-surface-alt:   var(--sw-gray-800);
+    --color-fg:            var(--sw-gray-50);
+    --color-fg-muted:      var(--sw-gray-400);
+    --color-border:        var(--sw-gray-50);
+    --color-border-subtle: var(--sw-gray-800);
+    --color-accent:        var(--sw-blue-400);
+    --color-accent-hover:  var(--sw-white);
+    --color-on-accent:     var(--sw-gray-950);
+    --color-danger:        var(--sw-red-500);
+    --color-focus:         var(--sw-blue-400);
+  }
+}
+
+:root[data-theme='dark'] {
+  --color-bg:            var(--sw-gray-950);
+  --color-surface:       var(--sw-gray-900);
+  --color-surface-alt:   var(--sw-gray-800);
+  --color-fg:            var(--sw-gray-50);
+  --color-fg-muted:      var(--sw-gray-400);
+  --color-border:        var(--sw-gray-50);
+  --color-border-subtle: var(--sw-gray-800);
+  --color-accent:        var(--sw-blue-400);
+  --color-accent-hover:  var(--sw-white);
+  --color-on-accent:     var(--sw-gray-950);
+  --color-danger:        var(--sw-red-500);
+  --color-focus:         var(--sw-blue-400);
+}
+
+/* ---------- Layer 3: component tokens ---------------------------------- */
+
+:root {
+  --btn-height: 48px;         /* >= 44px touch target */
+  --btn-padding-x: var(--space-3);
+  --nav-height: 72px;
+  --card-padding: var(--space-3);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  font-weight: var(--weight-regular);
+  -webkit-font-smoothing: antialiased;
+  /* Inter's optical sizing + tabular figures for data columns */
+  font-feature-settings: 'cv11', 'ss01';
+  font-variant-numeric: tabular-nums;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+p { margin: 0; max-width: var(--measure); text-wrap: pretty; }
+
+a { color: inherit; text-decoration: none; }
+
+img, svg { display: block; max-width: 100%; }
+
+/* One focus style, everywhere. Swiss: a hard offset rule, no glow. */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: var(--rule-bold) solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   Grid — strict 12 columns
+   ========================================================================== */
+
+.ds-container {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  /* px-4 floor matters: without it content touches the edge below 640px */
+  padding-inline: var(--space-2);
+}
+
+@media (min-width: 768px) {
+  .ds-container { padding-inline: var(--space-4); }
+}
+
+.ds-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+
+/* Mobile-first: everything is full width until it earns a span. */
+.ds-col-1  { grid-column: span 1; }
+.ds-col-2  { grid-column: span 2; }
+.ds-col-3  { grid-column: span 3; }
+.ds-col-4  { grid-column: span 4; }
+.ds-col-5  { grid-column: span 5; }
+.ds-col-6  { grid-column: span 6; }
+.ds-col-7  { grid-column: span 7; }
+.ds-col-8  { grid-column: span 8; }
+.ds-col-9  { grid-column: span 9; }
+.ds-col-10 { grid-column: span 10; }
+.ds-col-11 { grid-column: span 11; }
+.ds-col-12 { grid-column: span 12; }
+
+@media (max-width: 767px) {
+  [class*='ds-col-'] { grid-column: span 12; }
+}
+
+/* The visible grid. Swiss shows its structure — this is a real toggle for
+   checking alignment, not a decoration. */
+.ds-grid-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--motion-base) var(--ease);
+}
+
+.ds-grid-overlay[data-visible='true'] { opacity: 1; }
+
+.ds-grid-overlay .ds-container,
+.ds-grid-overlay .ds-grid { height: 100%; }
+
+.ds-grid-overlay span {
+  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+  border-inline: var(--rule) solid
+    color-mix(in srgb, var(--color-accent) 20%, transparent);
+}
+
+/* ==========================================================================
+   Typography utilities
+   ========================================================================== */
+
+.ds-display {
+  font-size: var(--text-4xl);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  font-weight: var(--weight-bold);
+}
+
+.ds-h1 { font-size: var(--text-3xl); line-height: var(--leading-tight); }
+.ds-h2 { font-size: var(--text-2xl); }
+.ds-h3 { font-size: var(--text-xl); }
+
+.ds-body-lg { font-size: var(--text-lg); line-height: var(--leading-body); }
+.ds-body    { font-size: var(--text-base); line-height: var(--leading-body); }
+.ds-small   { font-size: var(--text-sm); }
+
+/* The mono label is the system's signature: metadata, numbers, eyebrows. */
+.ds-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-fg-muted);
+}
+
+.ds-muted { color: var(--color-fg-muted); }
+
+/* ==========================================================================
+   Rules (dividers) — structural, not decorative
+   ========================================================================== */
+
+.ds-rule {
+  border: 0;
+  border-top: var(--rule) solid var(--color-border-subtle);
+  margin: 0;
+}
+
+.ds-rule-bold { border-top-width: var(--rule-bold); border-color: var(--color-border); }
+
+/* ==========================================================================
+   Components (minimal — enough to prove the system. Full set is S2–S5.)
+   ========================================================================== */
+
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: var(--btn-height);
+  padding-inline: var(--btn-padding-x);
+  border: var(--rule-bold) solid var(--color-border);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semi);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--motion-fast) var(--ease),
+              color var(--motion-fast) var(--ease);
+}
+
+.ds-btn:hover { background: var(--color-fg); color: var(--color-bg); }
+
+.ds-btn-primary {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.ds-btn-primary:hover {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  color: var(--color-on-accent);
+}
+
+.ds-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.ds-card {
+  padding: var(--card-padding);
+  background: var(--color-surface);
+  border: var(--rule) solid var(--color-border-subtle);
+  border-radius: var(--radius);
+}
+
+.ds-swatch {
+  height: var(--space-8);
+  border: var(--rule) solid var(--color-border-subtle);
+}
+
+/* ==========================================================================
+   Motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
