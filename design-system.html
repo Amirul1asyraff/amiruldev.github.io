@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design System — Swiss Modernism | Amirul</title>
+
+  <!-- Internal working reference, not a portfolio page. Keep it out of search. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="description" content="Design system reference for the portfolio revamp." />
+  <link rel="icon" type="image/png" href="assets/profile.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="design-system.css">
+
+  <style>
+    /* Page-local scaffolding for this reference only — not part of the system. */
+    .ds-section { padding-block: var(--space-8); border-top: var(--rule) solid var(--color-border-subtle); }
+    .ds-section:first-of-type { border-top: 0; }
+    .ds-stack > * + * { margin-top: var(--space-2); }
+    .ds-stack-lg > * + * { margin-top: var(--space-4); }
+
+    .ds-topbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--color-bg);
+      border-bottom: var(--rule-bold) solid var(--color-border);
+    }
+    .ds-topbar-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--space-2); min-height: var(--nav-height);
+      /* wrap: brand + 2 uppercase buttons don't fit 375px in one row */
+      flex-wrap: wrap;
+      padding-block: var(--space-1);
+    }
+    .ds-controls { display: flex; gap: var(--space-1); flex-wrap: wrap; }
+
+    .ds-spec {
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: var(--space-2); padding-block: var(--space-1);
+      border-bottom: var(--rule) solid var(--color-border-subtle);
+    }
+    .ds-spec-meta { flex-shrink: 0; }
+
+    .ds-scale-row {
+      display: grid; grid-template-columns: 6rem 1fr; gap: var(--space-2);
+      align-items: baseline; padding-block: var(--space-1);
+      border-bottom: var(--rule) solid var(--color-border-subtle);
+    }
+
+    .ds-demo-box {
+      background: var(--color-accent);
+      color: var(--color-on-accent);
+      display: flex; align-items: center; justify-content: center;
+      min-height: var(--space-6);
+      font-family: var(--font-mono); font-size: var(--text-xs);
+    }
+  </style>
+</head>
+
+<body>
+  <header class="ds-topbar">
+    <div class="ds-container ds-topbar-inner">
+      <div>
+        <div class="ds-label">Portfolio Revamp / S1</div>
+        <strong>Swiss Modernism 2.0</strong>
+      </div>
+      <div class="ds-controls">
+        <button type="button" class="ds-btn" id="grid-toggle" aria-pressed="false">Grid</button>
+        <button type="button" class="ds-btn" id="theme-toggle">Theme</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- The visible 12-column grid. Swiss shows its structure. -->
+  <div class="ds-grid-overlay" id="grid-overlay" aria-hidden="true">
+    <div class="ds-container">
+      <div class="ds-grid">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+
+  <main class="ds-container">
+
+    <!-- ---------------- Hero: the direction, applied ---------------- -->
+    <section class="ds-section">
+      <div class="ds-grid">
+        <div class="ds-col-2">
+          <div class="ds-label">01 / Direction</div>
+        </div>
+        <div class="ds-col-10 ds-stack-lg">
+          <h1 class="ds-display">Building systems that are specified before they are written.</h1>
+          <p class="ds-body-lg ds-muted">
+            The same discipline the CPRE-FL certification describes, expressed as a layout:
+            a strict grid, one accent, no decoration. The form is the argument.
+          </p>
+          <div class="ds-controls">
+            <a class="ds-btn ds-btn-primary" href="#type">View Work</a>
+            <a class="ds-btn" href="#color">Download CV</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- Colour ---------------- -->
+    <section class="ds-section" id="color">
+      <div class="ds-grid">
+        <div class="ds-col-2"><div class="ds-label">02 / Colour</div></div>
+        <div class="ds-col-10 ds-stack">
+          <h2 class="ds-h2">Monochrome, one accent</h2>
+          <p class="ds-muted">
+            Semantic roles only. Components never touch a raw hex — dark mode reassigns
+            the semantic layer and every component follows for free.
+          </p>
+
+          <div class="ds-grid" style="margin-top: var(--space-3);">
+            <div class="ds-col-3 ds-stack">
+              <div class="ds-swatch" style="background: var(--color-bg);"></div>
+              <div class="ds-label">bg</div>
+            </div>
+            <div class="ds-col-3 ds-stack">
+              <div class="ds-swatch" style="background: var(--color-surface);"></div>
+              <div class="ds-label">surface</div>
+            </div>
+            <div class="ds-col-3 ds-stack">
+              <div class="ds-swatch" style="background: var(--color-fg);"></div>
+              <div class="ds-label">fg</div>
+            </div>
+            <div class="ds-col-3 ds-stack">
+              <div class="ds-swatch" style="background: var(--color-accent);"></div>
+              <div class="ds-label">accent</div>
+            </div>
+          </div>
+
+          <div style="margin-top: var(--space-3);">
+            <div class="ds-spec">
+              <span>Body text on background</span>
+              <span class="ds-label ds-spec-meta" data-contrast="--color-fg|--color-bg">—</span>
+            </div>
+            <div class="ds-spec">
+              <span class="ds-muted">Muted text on background</span>
+              <span class="ds-label ds-spec-meta" data-contrast="--color-fg-muted|--color-bg">—</span>
+            </div>
+            <div class="ds-spec">
+              <span style="color: var(--color-accent);">Accent text on background</span>
+              <span class="ds-label ds-spec-meta" data-contrast="--color-accent|--color-bg">—</span>
+            </div>
+            <div class="ds-spec">
+              <span>On-accent over accent</span>
+              <span class="ds-label ds-spec-meta" data-contrast="--color-on-accent|--color-accent">—</span>
+            </div>
+          </div>
+          <p class="ds-small ds-muted" style="margin-top: var(--space-1);">
+            Ratios computed live from the rendered CSS. Flip the theme — they recompute.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- Type ---------------- -->
+    <section class="ds-section" id="type">
+      <div class="ds-grid">
+        <div class="ds-col-2"><div class="ds-label">03 / Type</div></div>
+        <div class="ds-col-10">
+          <h2 class="ds-h2">Inter, hierarchy from weight</h2>
+          <p class="ds-muted">One family. JetBrains Mono for labels, metadata and numbers.</p>
+
+          <div style="margin-top: var(--space-3);">
+            <div class="ds-scale-row">
+              <span class="ds-label">display</span>
+              <span class="ds-display">Amirul Asyraff</span>
+            </div>
+            <div class="ds-scale-row">
+              <span class="ds-label">h1</span>
+              <span class="ds-h1">Student Management API</span>
+            </div>
+            <div class="ds-scale-row">
+              <span class="ds-label">h2</span>
+              <span class="ds-h2">Selected Work</span>
+            </div>
+            <div class="ds-scale-row">
+              <span class="ds-label">h3</span>
+              <span class="ds-h3">Payment Gateway Flow</span>
+            </div>
+            <div class="ds-scale-row">
+              <span class="ds-label">body</span>
+              <span class="ds-body">Backend systems, APIs, and practical tooling.</span>
+            </div>
+            <div class="ds-scale-row">
+              <span class="ds-label">label</span>
+              <span class="ds-label">CPRE-FL / IREB CERTIFIED</span>
+            </div>
+            <div class="ds-scale-row">
+              <span class="ds-label">tabular</span>
+              <span class="ds-body" style="font-variant-numeric: tabular-nums;">01 &nbsp; 08 &nbsp; 2026 &nbsp; 11.50</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- Grid ---------------- -->
+    <section class="ds-section">
+      <div class="ds-grid">
+        <div class="ds-col-2"><div class="ds-label">04 / Grid</div></div>
+        <div class="ds-col-10">
+          <h2 class="ds-h2">12 columns, 8px rhythm</h2>
+          <p class="ds-muted">Hit <strong>Grid</strong> above to show the structure. Asymmetric by intent.</p>
+
+          <div class="ds-grid" style="margin-top: var(--space-3);">
+            <div class="ds-col-12"><div class="ds-demo-box">12</div></div>
+          </div>
+          <div class="ds-grid" style="margin-top: var(--space-1);">
+            <div class="ds-col-8"><div class="ds-demo-box">8</div></div>
+            <div class="ds-col-4"><div class="ds-demo-box">4</div></div>
+          </div>
+          <div class="ds-grid" style="margin-top: var(--space-1);">
+            <div class="ds-col-2"><div class="ds-demo-box">2</div></div>
+            <div class="ds-col-10"><div class="ds-demo-box">10</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- Components ---------------- -->
+    <section class="ds-section">
+      <div class="ds-grid">
+        <div class="ds-col-2"><div class="ds-label">05 / Components</div></div>
+        <div class="ds-col-10 ds-stack-lg">
+          <h2 class="ds-h2">Enough to prove the system</h2>
+
+          <div class="ds-controls">
+            <button class="ds-btn ds-btn-primary">Primary</button>
+            <button class="ds-btn">Secondary</button>
+            <button class="ds-btn" disabled>Disabled</button>
+          </div>
+
+          <div class="ds-grid">
+            <div class="ds-col-4">
+              <article class="ds-card ds-stack">
+                <div class="ds-label">01 / API</div>
+                <h3 class="ds-h3">Student Management API</h3>
+                <p class="ds-small ds-muted">Laravel · MySQL · REST</p>
+              </article>
+            </div>
+            <div class="ds-col-4">
+              <article class="ds-card ds-stack">
+                <div class="ds-label">02 / Web System</div>
+                <h3 class="ds-h3">Payment Gateway Flow</h3>
+                <p class="ds-small ds-muted">PHP · FPX · Auth</p>
+              </article>
+            </div>
+            <div class="ds-col-4">
+              <article class="ds-card ds-stack">
+                <div class="ds-label">03 / Infrastructure</div>
+                <h3 class="ds-h3">Home Lab &amp; Deployment</h3>
+                <p class="ds-small ds-muted">Docker · Nginx · Cloudflare</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ds-section">
+      <p class="ds-label">End / S1 — tokens, grid, typography. Components are S2–S5.</p>
+    </section>
+  </main>
+
+  <script>
+    /* ---- Theme toggle: OS -> explicit override, both directions ---- */
+    (function () {
+      const root = document.documentElement;
+      const btn = document.getElementById('theme-toggle');
+      const prefersDark = () => matchMedia('(prefers-color-scheme: dark)').matches;
+
+      const apply = (t) => {
+        root.setAttribute('data-theme', t);
+        btn.textContent = t === 'dark' ? 'Light' : 'Dark';
+        refreshContrast();
+      };
+
+      btn.addEventListener('click', () => {
+        const current = root.getAttribute('data-theme')
+          || (prefersDark() ? 'dark' : 'light');
+        apply(current === 'dark' ? 'light' : 'dark');
+      });
+
+      // Start from the OS, but don't stamp the attribute — let CSS own it
+      // until the user actually chooses.
+      btn.textContent = prefersDark() ? 'Light' : 'Dark';
+      matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        if (!root.hasAttribute('data-theme')) {
+          btn.textContent = prefersDark() ? 'Light' : 'Dark';
+          refreshContrast();
+        }
+      });
+    })();
+
+    /* ---- Grid overlay ---- */
+    (function () {
+      const btn = document.getElementById('grid-toggle');
+      const overlay = document.getElementById('grid-overlay');
+      btn.addEventListener('click', () => {
+        const on = overlay.getAttribute('data-visible') === 'true';
+        overlay.setAttribute('data-visible', String(!on));
+        btn.setAttribute('aria-pressed', String(!on));
+      });
+    })();
+
+    /* ---- Live contrast readout ------------------------------------------
+       Computed from the RENDERED css, not from a hardcoded table. A copied
+       list of hexes would drift from the stylesheet the moment a token
+       changed; reading getComputedStyle means this cannot lie.            */
+    function srgbToLin(c) {
+      c /= 255;
+      return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    }
+    function luminance([r, g, b]) {
+      return 0.2126 * srgbToLin(r) + 0.7152 * srgbToLin(g) + 0.0722 * srgbToLin(b);
+    }
+    function parseRGB(str) {
+      const m = str.match(/-?\d+(\.\d+)?/g);
+      return m ? [+m[0], +m[1], +m[2]] : null;
+    }
+    function resolve(varName) {
+      const probe = document.createElement('div');
+      probe.style.color = `var(${varName})`;
+      probe.style.display = 'none';
+      document.body.appendChild(probe);
+      const rgb = parseRGB(getComputedStyle(probe).color);
+      probe.remove();
+      return rgb;
+    }
+    function ratio(fg, bg) {
+      const a = luminance(fg), b = luminance(bg);
+      const [hi, lo] = a > b ? [a, b] : [b, a];
+      return (hi + 0.05) / (lo + 0.05);
+    }
+    function refreshContrast() {
+      document.querySelectorAll('[data-contrast]').forEach(el => {
+        const [fgVar, bgVar] = el.dataset.contrast.split('|');
+        const r = ratio(resolve(fgVar), resolve(bgVar));
+        const pass = r >= 4.5 ? 'AA' : (r >= 3 ? 'AA-large' : 'FAIL');
+        el.textContent = `${r.toFixed(2)}:1 ${pass}`;
+        el.style.color = r >= 4.5 ? 'var(--color-fg-muted)' : 'var(--color-danger)';
+      });
+    }
+    refreshContrast();
+  </script>
+</body>
+
+</html>
