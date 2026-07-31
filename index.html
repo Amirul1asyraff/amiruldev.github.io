@@ -20,20 +20,27 @@
   <meta property="og:title" content="Amirul | Developer Portfolio" />
   <meta property="og:description"
     content="Junior Software Developer. CPRE-FL certified in requirements engineering. Building web applications, APIs, and practical systems." />
-  <meta property="og:image" content="https://skycore.my/assets/profile.png" />
+  <!-- og:image stays PNG: social crawlers are unreliable with WebP. -->
+  <meta property="og:image" content="https://skycore.my/assets/profile-og.png" />
+  <meta property="og:image:width" content="600" />
+  <meta property="og:image:height" content="600" />
   <meta property="og:image:alt" content="Portrait of Amirul, software developer" />
   <meta property="og:site_name" content="Amirul" />
 
-  <!-- summary (not summary_large_image): profile.png is 800x800 square.
-       A 1.91:1 card would centre-crop it. Swap to summary_large_image in S6
-       once a purpose-built 1200x630 card exists. -->
+  <!-- summary (not summary_large_image): profile-og.png is square, and a
+       1.91:1 card would centre-crop it. Swap to summary_large_image once a
+       purpose-built 1200x630 card exists (needs design work, not just a
+       resize — parked with S2-S5). -->
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Amirul | Developer Portfolio" />
   <meta name="twitter:description"
     content="Junior Software Developer. CPRE-FL certified in requirements engineering. Building web applications, APIs, and practical systems." />
-  <meta name="twitter:image" content="https://skycore.my/assets/profile.png" />
+  <meta name="twitter:image" content="https://skycore.my/assets/profile-og.png" />
 
-  <link rel="icon" type="image/png" href="assets/profile.png">
+  <!-- 64px, not the 800x800 headshot: the old favicon downloaded 398KB to
+       draw a 16px icon. -->
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+  <link rel="apple-touch-icon" href="assets/profile-240.png">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,8 +48,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
 
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Font Awesome removed: ~75KB of render-blocking CSS plus webfonts for
+       11 glyphs. Icons are now inline SVG. -->
 
   <!-- Custom Styles -->
   <link rel="stylesheet" href="index.css">
@@ -114,7 +121,11 @@
       <aside class="panel">
         <div class="profile-card">
           <div class="avatar-container">
-            <img src="assets/profile.png" alt="Amirul's Headshot">
+            <picture>
+              <source srcset="assets/profile-240.webp" type="image/webp">
+              <img src="assets/profile-240.png" alt="Amirul's Headshot" width="240" height="240"
+                fetchpriority="high">
+            </picture>
           </div>
           <div class="profile-meta">
             <h3>Amirul</h3>
@@ -131,11 +142,17 @@
           </div>
           <div class="main-socials">
             <a href="https://github.com/Amirul1asyraff" target="_blank" rel="noreferrer" aria-label="Amirul on GitHub">
-              <i class="fa-brands fa-github" aria-hidden="true"></i>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                <path
+                  d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+              </svg>
             </a>
             <a href="https://www.linkedin.com/in/amirulasyraff15/" target="_blank" rel="noreferrer"
               aria-label="Amirul on LinkedIn">
-              <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                <path
+                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z" />
+              </svg>
             </a>
           </div>
           <p class="profile-blurb">
@@ -195,7 +212,12 @@
         <div class="card engineering-card">
           <div class="engineering-header">
             <div class="cert-badge">
-              <i class="fa-solid fa-stamp cert-icon"></i>
+              <svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="M5 22h14" />
+                <path d="M19.27 13.73A2.5 2.5 0 0 0 17.5 13h-11A2.5 2.5 0 0 0 4 15.5V18h16v-2.5c0-.66-.26-1.3-.73-1.77Z" />
+                <path d="M14 13V8.5C14 7 15 7 15 5a3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 2 1 2 1 3.5V13" />
+              </svg>
               <div>
                 <h4>CPRE-FL Certified</h4>
                 <span>IREB Certified Professional for Requirements Engineering</span>
@@ -209,25 +231,69 @@
 
           <div class="pipeline-grid">
             <div class="pipeline-node">
-              <div class="node-icon"><i class="fa-solid fa-file-invoice"></i></div>
+              <div class="node-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+                  <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                  <path d="M8 13h8" /><path d="M8 17h8" /><path d="M8 9h2" />
+                </svg>
+              </div>
               <h5>SRS Docs</h5>
               <p>Software Requirements Specifications</p>
             </div>
-            <div class="pipeline-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+            <div class="pipeline-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </div>
             <div class="pipeline-node">
-              <div class="node-icon"><i class="fa-solid fa-sitemap"></i></div>
+              <div class="node-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <rect x="9" y="2" width="6" height="6" rx="1" />
+                  <rect x="2" y="16" width="6" height="6" rx="1" />
+                  <rect x="16" y="16" width="6" height="6" rx="1" />
+                  <path d="M12 8v4" /><path d="M5 16v-2h14v2" />
+                </svg>
+              </div>
               <h5>SDD Specs</h5>
               <p>Software Design & System Architectures</p>
             </div>
-            <div class="pipeline-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+            <div class="pipeline-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </div>
             <div class="pipeline-node">
-              <div class="node-icon"><i class="fa-solid fa-diagram-next"></i></div>
+              <div class="node-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <rect x="3" y="3" width="7" height="7" rx="1" />
+                  <rect x="14" y="3" width="7" height="7" rx="1" />
+                  <rect x="14" y="14" width="7" height="7" rx="1" />
+                  <rect x="3" y="14" width="7" height="7" rx="1" />
+                  <path d="M10 6.5h4" /><path d="M17.5 10v4" />
+                </svg>
+              </div>
               <h5>RTM Maps</h5>
               <p>Requirements Traceability Matrix</p>
             </div>
-            <div class="pipeline-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+            <div class="pipeline-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </div>
             <div class="pipeline-node node-highlight">
-              <div class="node-icon"><i class="fa-solid fa-code"></i></div>
+              <div class="node-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <path d="m16 18 6-6-6-6" /><path d="m8 6-6 6 6 6" />
+                </svg>
+              </div>
               <h5>Robust API</h5>
               <p>Functional & Validated Software</p>
             </div>
@@ -247,7 +313,11 @@
       <div class="projects-grid">
         <article class="card project-card">
           <div class="project-img">
-            <img src="assets/project-api.png" alt="Student Management API Mockup">
+            <picture>
+              <source srcset="assets/project-api.webp" type="image/webp">
+              <img src="assets/project-api-640.png" alt="Student Management API Mockup" width="640" height="400"
+                loading="lazy" decoding="async">
+            </picture>
           </div>
           <div class="project-content">
             <div class="project-top">
@@ -271,7 +341,11 @@
 
         <article class="card project-card">
           <div class="project-img">
-            <img src="assets/project-payment.png" alt="Payment Gateway Mockup">
+            <picture>
+              <source srcset="assets/project-payment.webp" type="image/webp">
+              <img src="assets/project-payment-640.png" alt="Payment Gateway Mockup" width="640" height="400"
+                loading="lazy" decoding="async">
+            </picture>
           </div>
           <div class="project-content">
             <div class="project-top">
@@ -295,7 +369,11 @@
 
         <article class="card project-card">
           <div class="project-img">
-            <img src="assets/project-homelab.png" alt="Home Lab Illustration">
+            <picture>
+              <source srcset="assets/project-homelab.webp" type="image/webp">
+              <img src="assets/project-homelab-640.png" alt="Home Lab Illustration" width="640" height="400"
+                loading="lazy" decoding="async">
+            </picture>
           </div>
           <div class="project-content">
             <div class="project-top">
@@ -320,7 +398,12 @@
         <article class="card project-card upcoming-card">
           <div class="project-img"
             style="background: var(--bg-soft); display: flex; align-items: center; justify-content: center;">
-            <i class="fa-solid fa-calendar-check" style="font-size: 3rem; color: var(--accent); opacity: 0.7;"></i>
+            <svg class="upcoming-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M8 2v4" /><path d="M16 2v4" />
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <path d="M3 10h18" /><path d="m9 16 2 2 4-4" />
+            </svg>
           </div>
           <div class="project-content">
             <div class="project-top">
@@ -345,7 +428,11 @@
         <article class="card project-card upcoming-card">
           <div class="project-img"
             style="background: var(--bg-soft); display: flex; align-items: center; justify-content: center;">
-            <i class="fa-solid fa-book-open-reader" style="font-size: 3rem; color: var(--accent); opacity: 0.7;"></i>
+            <svg class="upcoming-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M12 7v14" />
+              <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
+            </svg>
           </div>
           <div class="project-content">
             <div class="project-top">

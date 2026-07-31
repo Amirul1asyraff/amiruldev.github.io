@@ -449,8 +449,14 @@ h1 {
   width: 44px;          /* 44x44 minimum touch target */
   height: 44px;
   color: var(--text);
-  font-size: 1.5rem;
   transition: transform 0.3s ease;
+}
+
+/* SVG icons size by width/height, not font-size — the old icon-font rules
+   would leave these at whatever the UA default is. */
+.main-socials svg {
+  width: 24px;
+  height: 24px;
 }
 
 /* :focus-visible too — the old JS hover only fired for a mouse */
@@ -463,6 +469,12 @@ h1 {
   margin: 8px 0 0;
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+.back-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
 /* "Back to Projects" on the project detail pages.
@@ -774,7 +786,11 @@ section {
   content: '';
   position: absolute;
   inset: 0;
-  background: url('https://www.transparenttextures.com/patterns/cubes.png');
+  /* Inlined (633 bytes). Was a third-party request to
+     transparenttextures.com on every page load - a DNS lookup, a TLS
+     handshake and an outside party seeing every visitor, for a
+     decorative texture. */
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEMAAABkCAMAAADqvX3PAAAAKlBMVEUAAADX19fX19fBwcHT09PX19fW1tbT09PW1tbV1dXOzs7Ozs7BwcHV1dX5uIg2AAAADnRSTlMAPQAKH0czAAApFAAAAHys1goAAAHwSURBVHja7ZfdcuMwCEb1GUIDcd//dZuk2n5rZzCKOzuzFzo3+XNOBAIHtQosxwi0XUw/jjh2qN1pVzV43FJwJIDLuq5tvaNmzxeEZI5wWP/p9v0gypgGYhGH8fL28yyM7ycOJkFlJW3tZDHhRdBjIO22JR6a1BGMgTAWopvr6BC1jSB1MDWyXYfvkpDlg4iiV83lITiuoXZL+U4/ltcNq2MhogaYBWMYjYU8HHfSRdTrCIOLYImemrfz8dMO6DlVGYyFMWz3tmuGY6GgO1ikXVM51JDXurBO0nyEcyPTnvOXvmyb0hzqfV64jUUYw47Re9CZe6EbeC+M39+TcfK/gTFZuxZgOSag7aMASwGkrQW1Y2lLwXRMx3RMx3T8Pw67FpSOcA5RCccOcTMNL05aRw7Fn2kizA7+1VNH6ENAOBgOxiIK888dHPVqh+Q/yeknzQfHkhx+nqyjT0QFzDUd2Skp53lp7PdFnEkYIhzQv/KRzJUV0QdDSON5+S14CEW0vqSTiAPWWDknCLsY0BZxnNP0L/Z9YQEO8yznXZ2yNwfgTu7rNFgj9aamvS9eZljMTNOeoybSGNwQkvZ+3XrCU07t4HmWSBjDLBzEwdSzhMYcRPRZNYmgdjA1FyahcKQIqpKZs8N0TMd0TMd0/BvHF8n9f8tHo7HcAAAAAElFTkSuQmCC');
   opacity: 0.1;
 }
 
@@ -976,7 +992,9 @@ footer {
 }
 
 .cert-icon {
-  font-size: 2rem;
+  width: 56px;          /* 32px glyph + 12px padding each side */
+  height: 56px;
+  flex-shrink: 0;
   color: var(--accent-2);
   background: rgba(16, 185, 129, 0.1);
   padding: 12px;
@@ -1021,9 +1039,18 @@ footer {
 }
 
 .node-icon {
-  font-size: 1.25rem;
+  display: flex;
+  justify-content: center;
   color: var(--accent);
   margin-bottom: 8px;
+}
+
+/* 24px, not the 20px the old icon font rendered: stroke icons read lighter
+   than the solid glyphs they replace and need the extra size to carry the
+   same weight in the pipeline. */
+.node-icon svg {
+  width: 24px;
+  height: 24px;
 }
 
 .node-highlight .node-icon {
@@ -1043,8 +1070,23 @@ footer {
 }
 
 .pipeline-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: rgba(255, 255, 255, 0.15);
-  font-size: 0.85rem;
+}
+
+.pipeline-arrow svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Placeholder mark on the two Upcoming cards — was an inline-styled icon font */
+.upcoming-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--accent);
+  opacity: 0.7;
 }
 
 
